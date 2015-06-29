@@ -1,8 +1,8 @@
 class Api::V1::UsersController < ApplicationController
   # before_filter :authenticate_user, except: [:create]
   before_filter :login_params_present?, only: :login
-  before_filter :authenticate_user, only: :index
-  before_filter :authenticate_moderator, only: :index
+  before_filter :authenticate_user, only: [:index, :destroy]
+  before_filter :authenticate_moderator, only: [:index, :destroy]
   def index
     @doctors = User.where(role_id: Role::ROLE[:doctor])
   end
@@ -26,6 +26,22 @@ class Api::V1::UsersController < ApplicationController
       end
     else
       render json: { success: false, message: "Role can't be blank" } 
+    end  
+  end
+
+  def destroy
+    @doctor = User.find_by_id(params[:id])
+    if @doctor.present? 
+      if @doctor.destroy
+        render json: {
+          success: true,
+          message: "doctor deleted successfully"          
+        }
+      else
+        render json: { success: false, message: @doctor.errors.full_messages.first } 
+      end  
+    else
+      render json:{success: false, message: "doctor not found!"}
     end  
   end
 

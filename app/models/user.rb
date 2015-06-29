@@ -3,11 +3,10 @@ class User < ActiveRecord::Base
   has_many   :specialities, through: :user_specialities
   has_many   :user_specialities, dependent: :destroy
   has_many   :invitations, class_name: "Invitation", :foreign_key => 'doctor_id'
-  has_many   :speakers
   belongs_to :role
   has_many :moderator_conferences, class_name: "Conference", :foreign_key => 'moderator_id'
   has_many :conferences, through: :speaker
-  has_many :speakers, dependent: :destroy 
+  has_many :speakers, dependent: :destroy, foreign_key: :speaker_id 
   validates :full_name, :email, :password, :country, presence: true         
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_blank: true}
   validates :email, uniqueness: {case_insensitive: true, allow_blank: true}
