@@ -13,4 +13,12 @@ if Speciality.count == 0
     {name: 'Biochemical Genetics'},
     {name: 'Pain Medicine'}
     ])
+end
+
+if Organizer.count == 0
+  organizers = Organizer.create([
+    {name: 'Rashid', email:"rashid@gmail.com", phone:"432434534"},
+    {name: 'Chanchal', email:"chanchal@gmail.com", phone:"4324345334"},
+    {name: 'Vihsal', email:"vihsal@gmail.com", phone:"332434534"}
+    ])
 end  
