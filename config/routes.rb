@@ -11,7 +11,8 @@ Rails.application.routes.draw do
         put :accept_reject_invitation, on: :member
       end  
       resources :organizers 
-      resources :specialities  
+      resources :specialities
+      resources :topics  
     end
   end
 
