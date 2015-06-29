@@ -6,7 +6,8 @@ Rails.application.routes.draw do
       resources :users
       match 'users/login', to: 'users#login', via: [:post]
       resources :conferences
-      resources :invitations   
+      resources :invitations
+      resources :organizers   
     end
   end
 
