@@ -5,8 +5,9 @@ class User < ActiveRecord::Base
   has_many   :invitations
   has_many   :speakers
   belongs_to :role
-  has_many :conferences, class_name: "Conference", :foreign_key => 'moderator_id'
-
+  has_many :moderator_conferences, class_name: "Conference", :foreign_key => 'moderator_id'
+  has_many :conferences, through: :speaker
+  has_many :speakers, dependent: :destroy 
   validates :full_name, :email, :password, :country, presence: true         
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_blank: true}
   validates :email, uniqueness: {case_insensitive: true, allow_blank: true}

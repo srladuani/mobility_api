@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629021351) do
+ActiveRecord::Schema.define(version: 20150629041345) do
 
   create_table "Conference_Specialities", force: :cascade do |t|
     t.integer "conference_id",   limit: 4, null: false
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20150629021351) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "moderator_id",      limit: 4
+    t.integer  "topic_id",          limit: 4
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -166,11 +167,10 @@ ActiveRecord::Schema.define(version: 20150629021351) do
   end
 
   create_table "topics", force: :cascade do |t|
-    t.string   "title",         limit: 255
-    t.text     "description",   limit: 65535
+    t.string   "title",       limit: 255
+    t.text     "description", limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "conference_id", limit: 4
   end
 
   create_table "user_specialities", force: :cascade do |t|

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
 
   def authenticate_user
-    @user = User.find_by_authentication_token
+    @user = User.find_by_authentication_token(params[:authentication_token])
     if @user.present?
       @user
     else
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_moderator
-    if @user.roles.id.eql? 1
+    if @user.role.id.eql? Role::ROLE[:moderator]
       @user
     else
       return render json:{

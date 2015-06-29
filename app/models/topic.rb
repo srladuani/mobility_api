@@ -1,4 +1,6 @@
 class Topic < ActiveRecord::Base
-  belongs_to :conference
+  has_one    :conference
   has_many   :topic_suggestions
+
+  validates :title, :description, presence: true 
 end
