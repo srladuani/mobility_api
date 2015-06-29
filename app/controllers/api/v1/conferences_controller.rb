@@ -1,10 +1,10 @@
 class Api::V1::ConferencesController < ApplicationController
   before_filter :authenticate_user
   before_filter :authenticate_moderator, only: [:create]
-  before_filter :authenticate_doctor, only: [:index]
 
   def index
-      
+    @conferences = Conference.paginate(:page => params[:page], :per_page => 5)
+
   end
 
   def create
