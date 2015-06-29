@@ -11,10 +11,12 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new(user_params)
     if params[:user][:role].present?
       if @user.save
-        specialities_ids = params[:specialities][:ids].split(',').map(&:to_i)
-        specialities_ids.each do |speciality_id|  
-          @user.user_specialities.create(speciality_id: speciality_id)
-        end
+        if params[:specialities].present? and params[:specialities].any?
+          specialities_ids = params[:specialities][:ids].split(',').map(&:to_i)
+          specialities_ids.each do |speciality_id|  
+            @user.user_specialities.create(speciality_id: speciality_id)
+          end
+        end  
         @user.update_attribute(:role_id, params[:user][:role])
         render json:{
           success: true,

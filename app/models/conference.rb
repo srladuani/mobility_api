@@ -8,6 +8,7 @@ class Conference < ActiveRecord::Base
   has_many :users, through: :speaker
   has_many :speakers, dependent: :destroy 
   validates :location, :start_date, :end_date, presence: true
+  has_many :avatars
 
   def get_specialities
     specials = []

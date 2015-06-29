@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629160007) do
+ActiveRecord::Schema.define(version: 20150629191925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "avatars", force: :cascade do |t|
+    t.integer  "conference_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
 
   create_table "conference_specialities", force: :cascade do |t|
     t.integer  "conference_id"
@@ -104,7 +114,7 @@ ActiveRecord::Schema.define(version: 20150629160007) do
     t.boolean  "is_active"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone",                limit: 255
+    t.string   "phone"
   end
 
 end
