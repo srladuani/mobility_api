@@ -1,6 +1,6 @@
 class Api::V1::ConferencesController < ApplicationController
   before_filter :authenticate_user
-  before_filter :authenticate_moderator, only: [:create]
+  before_filter :authenticate_moderator, only: [:create, :invite_doctor, :cancel_conference]
   def index
     @conferences = Conference.where('start_date >= ?', Date.today).paginate(:per_page => 5, :page => params[:page])
 
@@ -33,6 +33,38 @@ class Api::V1::ConferencesController < ApplicationController
       render json: {success: false, message: @topic.errors.full_messages.first}
     end    
   end
+  
+  def invite_doctor
+    @doctor_invitation = Invitation.new(
+      conference_id: params[:id], 
+      moderator_id: @user.id,
+      doctor_id: params[:doctor_id]
+      )
+    if @doctor_invitation.save
+      render json:{
+        success: true,
+        message: "invitation successfully updated",
+        status: @doctor_invitation.status 
+      }
+    else
+      render json: {success: false, message: @doctor_invitation.errors.full_messages.first}
+    end  
+  end
+
+  def cancel_conference
+    @conference = Conference.find_by_id(params[:id])
+    if @conference.present?
+      @conference.update_attribute(:conference_status, 2)
+      render json: {
+        success: true, 
+        message: "Conference cancelled successfully", 
+        status: @conference.conference_status 
+      }
+    else
+      render json: {success: false, message: "Conference not found!"}
+    end  
+  end
+
   private
   
   def specialities_params

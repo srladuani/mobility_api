@@ -6,7 +6,10 @@ Rails.application.routes.draw do
       resources :users
       match 'users/login', to: 'users#login', via: [:post]
       match 'doctors', to: 'users#index', via: [:get]
-      resources :conferences
+      resources :conferences do 
+        put :invite_doctor, on: :member
+        put :cancel_conference, on: :member
+      end  
       resources :invitations do
         put :accept_reject_invitation, on: :member
       end  

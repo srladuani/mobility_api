@@ -3,6 +3,10 @@ class Api::V1::TopicsController < ApplicationController
   before_filter :authenticate_doctor, only: :create
   before_filter :authenticate_moderator, only: :destroy
 
+  def index
+    @suggested_topics = TopicSuggestion.all
+  end
+
   def create
     @topic = Topic.new(topic_params)
     if @topic.save
