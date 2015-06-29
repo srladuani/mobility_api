@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       match 'users/login', to: 'users#login', via: [:post]
+      match 'doctors', to: 'users#index', via: [:get]
       resources :conferences
       resources :invitations
       resources :organizers   

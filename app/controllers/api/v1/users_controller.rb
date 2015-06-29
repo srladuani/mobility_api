@@ -1,6 +1,12 @@
 class Api::V1::UsersController < ApplicationController
   # before_filter :authenticate_user, except: [:create]
   before_filter :login_params_present?, only: :login
+  before_filter :authenticate_user, only: :index
+  before_filter :authenticate_moderator, only: :index
+  def index
+    @doctors = User.where(role_id: Role::ROLE[:doctor])
+  end
+
   def create
     @user = User.new(user_params)
     if params[:user][:role].present?
@@ -44,7 +50,7 @@ class Api::V1::UsersController < ApplicationController
   private 
   
   def user_params
-    params.require(:user).permit(:full_name, :email, :password, :country)
+    params.require(:user).permit(:full_name, :email, :password, :country, :phone)
   end
 
   def login_params
