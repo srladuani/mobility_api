@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       match 'users/login', to: 'users#login', via: [:post]
-      resources :conferences   
+      resources :conferences
+      resources :invitations   
     end
   end
 
