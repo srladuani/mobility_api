@@ -1,3 +1,3 @@
 class Organizer < ActiveRecord::Base
-  belongs_to :conference
+  has_many :conferences
 end

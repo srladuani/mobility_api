@@ -1,5 +1,5 @@
 class Conference < ActiveRecord::Base
-  has_one  :organizer, dependent: :destroy
+  belongs_to :organizer
   belongs_to :topic, dependent: :destroy
   has_many :invitations, dependent: :destroy
   has_many :specialities, through: :conference_specialities

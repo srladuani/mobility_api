@@ -5,7 +5,13 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       match 'users/login', to: 'users#login', via: [:post]
-      resources :conferences   
+      match 'doctors', to: 'users#index', via: [:get]
+      resources :conferences
+      resources :invitations do
+        put :accept_reject_invitation, on: :member
+      end  
+      resources :organizers 
+      resources :specialities  
     end
   end
 

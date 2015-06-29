@@ -26,4 +26,15 @@ class ApplicationController < ActionController::Base
     end  
   end
 
+  def authenticate_doctor
+    if @user.role.id.eql? Role::ROLE[:doctor]
+      @user
+    else
+      return render json:{
+        success: false,
+        message: "You are not authorized"
+      }
+    end  
+  end
+
 end
