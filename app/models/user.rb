@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many   :topic_suggestions
   has_many   :specialities, through: :user_specialities
   has_many   :user_specialities, dependent: :destroy
-  has_many   :invitations
+  has_many   :invitations, class_name: "Invitation", :foreign_key => 'doctor_id'
   has_many   :speakers
   belongs_to :role
   has_many :moderator_conferences, class_name: "Conference", :foreign_key => 'moderator_id'
@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token
     end    
+  end
+
+  def is_doctor?
+    self.role.id.eql? Role::ROLE[:doctor]
   end
   
   protected

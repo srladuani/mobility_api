@@ -9,7 +9,6 @@ class Conference < ActiveRecord::Base
   has_many :speakers, dependent: :destroy 
   validates :location, :start_date, :end_date, presence: true
 
-
   def get_specialities
     specials = []
     self.specialities.each do |speciality|   
@@ -19,5 +18,17 @@ class Conference < ActiveRecord::Base
       )
     end
     specials
+  end
+  
+  def invite_all_doctors
+    doctors = User.where(role_id: Role::ROLE[:doctor])
+    doctors.each do |doctor|
+      if doctor.specialities.present? 
+        intersection = doctor.specialities.ids & self.specialities.ids
+        if intersection.present? 
+          self.invitations.create(moderator_id: self.id, doctor_id: doctor.id)
+        end 
+      end  
+    end  
   end   
 end
