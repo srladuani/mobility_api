@@ -16,18 +16,18 @@ class Api::V1::ConferencesController < ApplicationController
         specialities_ids.each do |speciality_id|  
           @conference.conference_specialities.create(speciality_id: speciality_id)
         end
-        images_data = []
-        unless images_data.is_a? Array
-          images_data << params[:conference][:images_data]
-        else
-          images_data = params[:conference][:images_data]
-        end
-        images_data.each do |data|
-          image = Avatar.new
-          image.set_image data
-          image.conference_id=@conference.id
-          image.save
-        end
+        #images_data = params[:images_data][:images]
+        # unless images_data.is_a? Array
+        #   images_data << params[:conference][:images_data]
+        # else
+        #   images_data = params[:conference][:images_data]
+        # end
+        # images_data.each do |data|
+        #   image = Avatar.new
+        #   image.set_image data
+        #   image.conference_id=@conference.id
+        #   image.save
+        # end
         @conference.invite_all_doctors  
         render json:{
           success: true,
