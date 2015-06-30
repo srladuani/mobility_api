@@ -10,7 +10,8 @@ class Api::V1::TopicsController < ApplicationController
   def create
     @topic = Topic.new(topic_params)
     if @topic.save
-      @topic.topic_suggestion.create(user_id: @user.id)
+      topic_suggestion = TopicSuggestion.new(user_id: @user.id, topic_id: @topic.id)
+      topic_suggestion.save
       render json:{
         success: true,
         message: "Suggestions successfully sent",
